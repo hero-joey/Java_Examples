@@ -30,6 +30,11 @@ public class CustomerServiceImpl implements CustomerService {
         return this.customerDao.queryById(id);
     }
 
+    @Override
+    public int insertCustomer(Customer customer) {
+        return this.customerDao.insertCustomer(customer);
+    }
+
     /**
      * 查询多条数据
      *

@@ -53,6 +53,15 @@
         values (#{username}, #{job}, #{phone})
     </insert>
 
+    <insert id="insertCustomer">
+        <selectKey keyProperty="id" resultType="Integer" order="BEFORE">
+            select if(max(id) is null, 1, max(id) +1) as newId from test.t_customer
+        </selectKey>
+        insert into test.t_customer(id, username, job , phone)
+        values(#{id} , #{username} , #{job} , #{phone})
+    </insert>
+
+
     <!--通过主键修改数据-->
     <update id="update">
         update test.t_customer

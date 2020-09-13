@@ -46,6 +46,9 @@ public interface CustomerDao {
      */
     int insert(Customer customer);
 
+
+    int insertCustomer(Customer customer);
+
     /**
      * 修改数据
      *
