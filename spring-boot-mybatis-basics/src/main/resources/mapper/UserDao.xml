@@ -75,6 +75,15 @@
     </select>
 
     <!--通过实体作为筛选条件查询-->
+    <select id="findUsersByNames" resultMap="BaseResultMap">
+        <bind name="patten_username" value="'%' + name + '%'"/>
+        select
+        t_id, t_name, t_age
+        from test.t_user
+        where t_name like #{patten_username}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
     <select id="findUsersByUserIds" resultMap="BaseResultMap">
         select
         t_id, t_name, t_age

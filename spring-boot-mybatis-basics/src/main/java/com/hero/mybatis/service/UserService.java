@@ -29,6 +29,7 @@ public interface UserService {
      */
     List<User> queryAllByLimit(int offset, int limit);
 
+    List<User> findUsersByNames(User user);
     List<User> findUsersByNamesAndJobs(User user);
 
     List<User> findUsersByNamesOrJobs(User user);

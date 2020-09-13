@@ -30,6 +30,8 @@ public interface UserDao {
      */
     List<User> queryAllByLimit(@Param("offset") int offset, @Param("limit") int limit);
 
+    List<User> findUsersByNames(User user);
+
     List<User> findUsersByNamesAndJobs(User user);
 
     List<User> findUsersByUserIds(List<User> users);

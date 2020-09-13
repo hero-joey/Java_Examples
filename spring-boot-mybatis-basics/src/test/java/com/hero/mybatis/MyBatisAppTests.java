@@ -126,6 +126,18 @@ public class MyBatisAppTests {
         System.out.println(users);
     }
 
+    //使用bind组装字符串
+    @Test
+    public void testSelectByName() {
+        User user = new User();
+        user.setName("L");
+
+        List<User> users = userService.findUsersByNames(user);
+        System.out.println(users);
+    }
+
+
+
 
 
 }
