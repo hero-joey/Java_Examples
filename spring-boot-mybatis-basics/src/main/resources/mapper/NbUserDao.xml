@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hero.mybatis.dao.NbUserDao">
+
+    <resultMap id="BaseResultMap" type="com.hero.mybatis.entity.NbUser">
+        <!--@Table t_nb_user-->
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="username" column="username" jdbcType="VARCHAR"/>
+        <result property="address" column="address" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <resultMap id="UserWithOrderResult" type="com.hero.mybatis.entity.NbUser">
+        <!--@Table t_nb_user-->
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="username" column="username" jdbcType="VARCHAR"/>
+        <result property="address" column="address" jdbcType="VARCHAR"/>
+        <collection property="nbOrders" ofType="com.hero.mybatis.entity.NbOrders">
+            <result property="id" column="orders_id"/>
+            <result property="number" column="number"/>
+        </collection>
+
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="UserWithOrderResult">
+        select
+          u.*, o.id as orders_id, o.number
+        from test.t_nb_user as u, test.t_nb_orders as o
+        where u.id = o.user_id and u.id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="BaseResultMap">
+        select
+          id, username, address
+        from test.t_nb_user
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="BaseResultMap">
+        select
+          id, username, address
+        from test.t_nb_user
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="username != null and username != ''">
+                and username = #{username}
+            </if>
+            <if test="address != null and address != ''">
+                and address = #{address}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into test.t_nb_user(username, address)
+        values (#{username}, #{address})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update test.t_nb_user
+        <set>
+            <if test="username != null and username != ''">
+                username = #{username},
+            </if>
+            <if test="address != null and address != ''">
+                address = #{address},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from test.t_nb_user where id = #{id}
+    </delete>
+
+</mapper>

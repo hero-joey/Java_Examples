@@ -1,8 +1,12 @@
 package com.hero.mybatis;
 
 import com.hero.mybatis.entity.Customer;
+import com.hero.mybatis.entity.NbUser;
+import com.hero.mybatis.entity.Person;
 import com.hero.mybatis.entity.User;
 import com.hero.mybatis.service.CustomerService;
+import com.hero.mybatis.service.NbUserService;
+import com.hero.mybatis.service.PersonService;
 import com.hero.mybatis.service.UserService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -21,6 +25,12 @@ public class MyBatisAppTests {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    PersonService personService;
+
+    @Autowired
+    NbUserService nbUserService;
 
     @Test
     public void testSelectById()
@@ -134,6 +144,28 @@ public class MyBatisAppTests {
 
         List<User> users = userService.findUsersByNames(user);
         System.out.println(users);
+    }
+
+    //一对一关联查询，不推荐，需要查询两次
+    @Test
+    public void testPersonAssociationQuery() {
+        Person person = personService.queryById(1);
+        System.out.println(person);
+    }
+
+    //连表查询
+    @Test
+    public void testPersonJoinQuery() {
+        Person person = personService.findPersonById(2);
+        System.out.println(person);
+    }
+
+    //连表List查询
+    @Test
+    public void testPersonJoinQuerys() {
+        NbUser nbUser = nbUserService.queryById(1);
+
+        System.out.println(nbUser);
     }
 
 
