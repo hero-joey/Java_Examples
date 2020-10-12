@@ -1,0 +1,2 @@
+#springboot的需要配置,spring的原生支持，不需要配置,例如BenPostProcessor
+org.springframework.boot.env.EnvironmentPostProcessor=com.hero.configure2.MyEnvironmentPostProcessor
