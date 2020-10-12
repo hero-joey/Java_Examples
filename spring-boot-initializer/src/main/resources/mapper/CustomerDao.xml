@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hero.initializer.dao.CustomerDao">
+
+    <resultMap id="BaseResultMap" type="com.hero.initializer.entity.Customer">
+        <!--@Table t_customer-->
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="username" column="username" jdbcType="VARCHAR"/>
+        <result property="job" column="job" jdbcType="VARCHAR"/>
+        <result property="phone" column="phone" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="BaseResultMap">
+        select
+          id, username, job, phone
+        from test.t_customer
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="BaseResultMap">
+        select
+          id, username, job, phone
+        from test.t_customer
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="BaseResultMap">
+        select
+          id, username, job, phone
+        from test.t_customer
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="username != null and username != ''">
+                and username = #{username}
+            </if>
+            <if test="job != null and job != ''">
+                and job = #{job}
+            </if>
+            <if test="phone != null and phone != ''">
+                and phone = #{phone}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into test.t_customer(username, job, phone)
+        values (#{username}, #{job}, #{phone})
+    </insert>
+
+    <insert id="insertCustomer">
+        <selectKey keyProperty="id" resultType="Integer" order="BEFORE">
+            select if(max(id) is null, 1, max(id) +1) as newId from test.t_customer
+        </selectKey>
+        insert into test.t_customer(id, username, job , phone)
+        values(#{id} , #{username} , #{job} , #{phone})
+    </insert>
+
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update test.t_customer
+        <set>
+            <if test="username != null and username != ''">
+                username = #{username},
+            </if>
+            <if test="job != null and job != ''">
+                job = #{job},
+            </if>
+            <if test="phone != null and phone != ''">
+                phone = #{phone},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from test.t_customer where id = #{id}
+    </delete>
+
+</mapper>
