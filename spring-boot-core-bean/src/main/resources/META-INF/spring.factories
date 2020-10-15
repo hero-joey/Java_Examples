@@ -1,0 +1,1 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=com.hero.core.bean.RunnableConfiguration, com.hero.core.bean.UserConfiguration, com.hero.core.bean.RoleConfiguration 
