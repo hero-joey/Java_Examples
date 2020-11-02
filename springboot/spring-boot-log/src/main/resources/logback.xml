@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <appender name="consolelog" class = "ch.qos.logback.core.ConsoleAppender">
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <pattern>%d{yyyy-MMM-dd} %-5level [%thread] %logger{82} - %msg%n</pattern>
+        </layout>
+
+    </appender>
+
+    <!-- 日志输出级别 -->
+    <root level="debug">
+        <appender-ref ref="consolelog" />
+    </root>
+
+</configuration>
