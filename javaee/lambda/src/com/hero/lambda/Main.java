@@ -1,6 +1,7 @@
 package com.hero.lambda;
 
 import java.util.concurrent.Callable;
+import java.util.function.BiFunction;
 import java.util.function.Function;
 
 public class Main {
@@ -93,10 +94,18 @@ public class Main {
         Runnable runnable5 = () -> find();
         runnable5.run();
 
-        Runnable runnable6 = () -> 100;
+        //不可以这样使用，否则会报错
+        //Runnable runnable6 = () -> 100;
 
         OrderMapper orderMapper3 = x -> orderTest1(x);
         //OrderMapper orderMapper4 = x -> orderTest2(x);
+
+        BiFunction<String, String, Integer> biFunction = (s1, s2) -> Integer.parseInt(s1) + Integer.parseInt(s2);
+        System.out.println(biFunction.apply("123", "456"));
+
+        Function<String, Integer>  function1 = x -> x.length();
+        System.out.println(function1.apply("hello"));
+
 
 
     }
