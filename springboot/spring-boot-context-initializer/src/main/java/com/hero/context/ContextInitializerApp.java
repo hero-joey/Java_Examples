@@ -1,6 +1,7 @@
 package com.hero.context;
 
 import com.hero.context.initializer.SecondContextInitializer;
+import com.hero.listener.SecondListener;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -16,6 +17,7 @@ public class ContextInitializerApp {
         //SpringApplication.run(ContextInitializerApp.class, args);
         SpringApplication springApplication = new SpringApplication(ContextInitializerApp.class);
         springApplication.addInitializers(new SecondContextInitializer());
+        springApplication.addListeners(new SecondListener());
         springApplication.run(args);
     }
 }
