@@ -1,6 +1,5 @@
 package com.hero.test;
 
-import com.hero.test.bean.User;
 import com.hero.test.mapper.UserMapper;
 import org.junit.Assert;
 import org.junit.Test;

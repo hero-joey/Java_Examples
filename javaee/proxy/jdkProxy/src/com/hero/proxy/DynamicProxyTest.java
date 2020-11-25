@@ -1,12 +1,17 @@
 package com.hero.proxy;
 
+import sun.misc.ProxyGenerator;
+
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 
 public class DynamicProxyTest {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
 
         // 方法一
         System.out.println("============ 方法一 ==============");
@@ -17,6 +22,10 @@ public class DynamicProxyTest {
 
         AdminService proxy = (AdminService) new AdminServiceDynamicProxy(adminService, adminServiceInvocation).getPersonProxy();
 
+        byte[] bytes = ProxyGenerator.generateProxyClass("$Proxy0", new Class[]{AdminService.class});
+        FileOutputStream fileOutputStream = new FileOutputStream("E://$Proxy0.class");
+        fileOutputStream.write(bytes);
+        fileOutputStream.close();
         System.out.println("代理对象：" + proxy.getClass());
 
         Object obj = proxy.find();
