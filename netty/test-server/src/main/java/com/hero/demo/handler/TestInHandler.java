@@ -9,7 +9,7 @@ import io.netty.channel.ChannelInboundHandlerAdapter;
  * @author: maccura
  * @version: 1.0
  */
-public class InHandler extends ChannelInboundHandlerAdapter {
+public class TestInHandler extends ChannelInboundHandlerAdapter {
     @Override
     public void handlerAdded(ChannelHandlerContext ctx) throws Exception {
         System.out.println("被调用: " + "handlerAdded");

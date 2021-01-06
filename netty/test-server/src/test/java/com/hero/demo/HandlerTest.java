@@ -12,7 +12,7 @@ import org.junit.Test;
 /**
  * Unit test for simple App.
  */
-public class InHandlerTest
+public class HandlerTest
 {
     /**
      * Rigorous Test :-)
@@ -25,7 +25,7 @@ public class InHandlerTest
 
     @Test
     public void testInHandler() {
-        final InHandler inHandler= new InHandler();
+        final TestInHandler testInHandler = new TestInHandler();
         ChannelInitializer<EmbeddedChannel> channelChannelInitializer = new ChannelInitializer<EmbeddedChannel>() {
             @Override
             protected void initChannel(EmbeddedChannel embeddedChannel) throws Exception {
@@ -57,7 +57,7 @@ public class InHandlerTest
 
     @Test
     public void testOutHandler() {
-        final InHandler inHandler= new InHandler();
+        final TestInHandler testInHandler = new TestInHandler();
         ChannelInitializer<EmbeddedChannel> channelChannelInitializer = new ChannelInitializer<EmbeddedChannel>() {
             @Override
             protected void initChannel(EmbeddedChannel embeddedChannel) throws Exception {
