@@ -1,14 +1,14 @@
 package com.hero.echoserver.client;
 
 import io.netty.bootstrap.Bootstrap;
-import io.netty.channel.ChannelFuture;
-import io.netty.channel.ChannelInitializer;
-import io.netty.channel.EventLoopGroup;
+import io.netty.buffer.ByteBuf;
+import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
 
 import java.net.InetSocketAddress;
+import java.util.Scanner;
 
 public class EchoClient {
     private final String host;
@@ -35,8 +35,30 @@ public class EchoClient {
                              new EchoClientHandler());
                     }
                 });
-            ChannelFuture f = b.connect().sync();
-            f.channel().closeFuture().sync();
+            ChannelFuture channelFuture = b.connect().sync().addListener(new ChannelFutureListener() {
+                @Override
+                public void operationComplete(ChannelFuture future) throws Exception {
+                    if (future.isSuccess()) {
+                        System.out.println("连接服务器成功");
+                    } else {
+                        System.out.println("连接服务器失败，请重试");
+                    }
+
+                }
+            });
+            Channel channel = channelFuture.channel();
+            Scanner scanner = new Scanner(System.in);
+
+            while (scanner.hasNext()) {
+                String message = scanner.next();
+                ByteBuf byteBuf = channel.alloc().buffer();
+                byteBuf.writeBytes(message.getBytes());
+
+                channel.writeAndFlush(byteBuf);
+
+            }
+
+            channelFuture.channel().closeFuture().sync();
         } finally {
             group.shutdownGracefully().sync();
         }

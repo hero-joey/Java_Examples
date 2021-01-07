@@ -1,10 +1,7 @@
 package com.hero.echoserver.server;
 
 import io.netty.buffer.ByteBuf;
-import io.netty.buffer.Unpooled;
-import io.netty.channel.ChannelFutureListener;
-import io.netty.channel.ChannelHandlerContext;
-import io.netty.channel.ChannelInboundHandlerAdapter;
+import io.netty.channel.*;
 import io.netty.util.CharsetUtil;
 
 /**
@@ -13,18 +10,32 @@ import io.netty.util.CharsetUtil;
  * @author: bear
  * @version: 1.0
  */
+@ChannelHandler.Sharable
 public class EchoServerHandler extends ChannelInboundHandlerAdapter {
     @Override
-    public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-        ByteBuf byteBuf = (ByteBuf)msg;
-        System.out.println("Server received: " + byteBuf.toString(CharsetUtil.UTF_8));
-        ctx.write(byteBuf);
+    public void channelRead(ChannelHandlerContext ctx, final Object msg) throws Exception {
+        final ByteBuf byteBuf = (ByteBuf) msg;
+        if (byteBuf.hasArray()) {
+            System.out.println("Heap memory");
+        } else {
+            byte[] bytes = new byte[byteBuf.readableBytes()];
+            byteBuf.getBytes(0, bytes);
+            System.out.println("Server received: " + byteBuf.toString(CharsetUtil.UTF_8));
+            System.out.println("Message refCnt: " + byteBuf.refCnt());
+            ChannelFuture channelFuture = ctx.writeAndFlush(msg);
+            channelFuture.addListener(new ChannelFutureListener() {
+                @Override
+                public void operationComplete(ChannelFuture future) throws Exception {
+                    System.out.println("写回后,Message refCnt: " + byteBuf.refCnt());
+                }
+            });
+
+        }
     }
 
     @Override
     public void channelReadComplete(ChannelHandlerContext ctx) throws Exception {
-        ctx.writeAndFlush(Unpooled.EMPTY_BUFFER)
-                .addListener(ChannelFutureListener.CLOSE);
+
     }
 
     @Override

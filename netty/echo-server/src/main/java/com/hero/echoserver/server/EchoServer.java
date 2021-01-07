@@ -54,6 +54,7 @@ public class EchoServer {
 
         int port = 8080;
         new EchoServer(port).start();
+        System.out.println("Server start, Port: " + port);
     }
 
 }
