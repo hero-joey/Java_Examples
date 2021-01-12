@@ -49,4 +49,148 @@ public class DecoderTest
             e.printStackTrace();
         }
     }
+
+    @Test
+    public void testReplayingDecoder() {
+
+        ChannelInitializer<EmbeddedChannel> channelInitializer = new ChannelInitializer<EmbeddedChannel>() {
+            @Override
+            protected void initChannel(EmbeddedChannel embeddedChannel) throws Exception {
+                embeddedChannel.pipeline().addLast(new Byte2InterReplayingDecoder())
+                        .addLast(new IntegerProcessHandler());
+            }
+        };
+
+        EmbeddedChannel embeddedChannel = new EmbeddedChannel(channelInitializer);
+
+        ByteBuf byteBuf = ByteBufAllocator.DEFAULT.buffer();
+        byteBuf.writeInt(1);
+        byteBuf.writeInt(2);
+        byteBuf.writeShort(1);
+        byteBuf.writeShort(1);
+
+        embeddedChannel.writeInbound(byteBuf);
+
+        try {
+            Thread.sleep(Integer.MAX_VALUE);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void testIntegerAddDecoder() {
+
+        ChannelInitializer<EmbeddedChannel> channelInitializer = new ChannelInitializer<EmbeddedChannel>() {
+            @Override
+            protected void initChannel(EmbeddedChannel embeddedChannel) throws Exception {
+                embeddedChannel.pipeline().addLast(new IntegerAddDecoder())
+                        .addLast(new IntegerProcessHandler());
+            }
+        };
+
+        EmbeddedChannel embeddedChannel = new EmbeddedChannel(channelInitializer);
+
+        ByteBuf byteBuf = ByteBufAllocator.DEFAULT.buffer();
+        byteBuf.writeInt(1);
+        byteBuf.writeInt(2);
+        byteBuf.writeInt(2);
+        byteBuf.writeInt(3);
+
+        embeddedChannel.writeInbound(byteBuf);
+
+        try {
+            Thread.sleep(Integer.MAX_VALUE);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void testStringReplayDecoder() {
+
+        ChannelInitializer<EmbeddedChannel> channelInitializer = new ChannelInitializer<EmbeddedChannel>() {
+            @Override
+            protected void initChannel(EmbeddedChannel embeddedChannel) throws Exception {
+                embeddedChannel.pipeline().addLast(new StringReplayDecoder())
+                        .addLast(new StringProcessHandler());
+            }
+        };
+
+        EmbeddedChannel embeddedChannel = new EmbeddedChannel(channelInitializer);
+
+        ByteBuf byteBuf = ByteBufAllocator.DEFAULT.buffer();
+        byteBuf.writeInt(5);
+        byteBuf.writeBytes("Hello".getBytes());
+        byteBuf.writeInt(5);
+        byteBuf.writeBytes("World!".getBytes());
+        byteBuf.writeInt(5);
+        byteBuf.writeBytes("I am hero".getBytes());
+
+        embeddedChannel.writeInbound(byteBuf);
+
+        try {
+            Thread.sleep(Integer.MAX_VALUE);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void testStringIntegerHeaderDecoder() {
+
+        ChannelInitializer<EmbeddedChannel> channelInitializer = new ChannelInitializer<EmbeddedChannel>() {
+            @Override
+            protected void initChannel(EmbeddedChannel embeddedChannel) throws Exception {
+                embeddedChannel.pipeline().addLast(new StringIntegerHeaderDecoder())
+                        .addLast(new StringProcessHandler());
+            }
+        };
+
+        EmbeddedChannel embeddedChannel = new EmbeddedChannel(channelInitializer);
+
+        ByteBuf byteBuf = ByteBufAllocator.DEFAULT.buffer();
+        byteBuf.writeInt(5);
+        byteBuf.writeBytes("Hello".getBytes());
+        byteBuf.writeInt(5);
+        byteBuf.writeBytes("World".getBytes());
+        byteBuf.writeInt(5);
+        byteBuf.writeBytes("I am hero".getBytes());
+
+        embeddedChannel.writeInbound(byteBuf);
+
+        try {
+            Thread.sleep(Integer.MAX_VALUE);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void testInteger2StringDecoder() {
+
+        ChannelInitializer<EmbeddedChannel> channelInitializer = new ChannelInitializer<EmbeddedChannel>() {
+            @Override
+            protected void initChannel(EmbeddedChannel embeddedChannel) throws Exception {
+                embeddedChannel.pipeline().addLast(new Byte2IntegerDecoder())
+                        .addLast(new Integer2StringDecoder())
+                        .addLast(new StringProcessHandler());
+            }
+        };
+
+        EmbeddedChannel embeddedChannel = new EmbeddedChannel(channelInitializer);
+
+        ByteBuf byteBuf = ByteBufAllocator.DEFAULT.buffer();
+        byteBuf.writeInt(5);
+        byteBuf.writeInt(10);
+        byteBuf.writeInt(15);
+
+        embeddedChannel.writeInbound(byteBuf);
+
+        try {
+            Thread.sleep(Integer.MAX_VALUE);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
 }
