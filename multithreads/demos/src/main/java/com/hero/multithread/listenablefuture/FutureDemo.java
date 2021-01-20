@@ -44,7 +44,7 @@ public class FutureDemo {
                 e.printStackTrace();
                 return false;
             }
-            return false;
+            return true;
         }
     }
 
@@ -70,7 +70,7 @@ public class FutureDemo {
         public void run() {
             System.out.println("读书中………………");
             try {
-                Thread.sleep(5000);
+                Thread.sleep(1000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
