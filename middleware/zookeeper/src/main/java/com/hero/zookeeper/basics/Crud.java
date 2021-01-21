@@ -205,13 +205,43 @@ public class Crud
         }
     }
 
+    public static void deleteNode() {
+        //创建客户端
+        CuratorFramework client = ClientFactory.createSimple(ZK_ADDRESS);
+        try {
+            //启动客户端实例,连接服务器
+            client.start();
+
+            String deleteNode = "/zookeeper/test/create-node";
+            Stat stat = client.checkExists().forPath(deleteNode);
+            if (stat != null) {
+                client.delete().inBackground(new BackgroundCallback() {
+                    @Override
+                    public void processResult(CuratorFramework curatorFramework, CuratorEvent curatorEvent) throws Exception {
+                        if (curatorEvent.getResultCode() == 0) {
+                            System.out.printf("delete node %s success%n", curatorEvent.getPath());
+                        }
+                    }
+                }).forPath(deleteNode);
+
+            }
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        } finally {
+            CloseableUtils.closeQuietly(client);
+        }
+    }
+
     public static void main(String[] args) {
 //        checkNode();
 //        createNode();
 //        createSequentialNode();
-        //createEphemeralSequentialNode();
-        //readNode();
-        //updateNode();
-        updateNodeAsync();
+//        createEphemeralSequentialNode();
+//        readNode();
+//        updateNode();
+//        updateNodeAsync();
+            deleteNode();
         }
 }
