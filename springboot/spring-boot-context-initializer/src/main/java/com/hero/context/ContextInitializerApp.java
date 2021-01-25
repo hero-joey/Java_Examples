@@ -5,6 +5,9 @@ import com.hero.listener.SecondListener;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @description: MyBatisApp
  * @date: 2020/9/9 16:05
@@ -18,6 +21,10 @@ public class ContextInitializerApp {
         SpringApplication springApplication = new SpringApplication(ContextInitializerApp.class);
         springApplication.addInitializers(new SecondContextInitializer());
         springApplication.addListeners(new SecondListener());
+
+        System.out.println(ArrayList.class.isAssignableFrom(List.class));
+        System.out.println(List.class.isAssignableFrom(ArrayList.class));
+
         springApplication.run(args);
     }
 }

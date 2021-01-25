@@ -17,6 +17,7 @@ import org.springframework.core.annotation.Order;
 public class FourthListener implements SmartApplicationListener {
     @Override
     public boolean supportsEventType(Class<? extends ApplicationEvent> eventType) {
+        System.out.println(eventType.getSimpleName());
         return ApplicationStartedEvent.class.isAssignableFrom(eventType) || ApplicationPreparedEvent.class.isAssignableFrom(eventType);
     }
 

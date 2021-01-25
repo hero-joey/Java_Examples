@@ -21,6 +21,7 @@ public class HelloWorldApp {
     }
     public static void main(String[] args) {
         ApplicationContext applicationContext = SpringApplication.run(HelloWorldApp.class, args);
+        applicationContext.getBean(Animal.class);
         applicationContext.getBean(Runnable.class).run();
         ((ConfigurableApplicationContext) applicationContext).close();
     }
