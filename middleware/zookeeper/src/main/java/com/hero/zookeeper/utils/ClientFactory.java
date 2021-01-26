@@ -12,13 +12,37 @@ import org.apache.curator.retry.ExponentialBackoffRetry;
  * @version: 1.0
  */
 public class ClientFactory {
+    private static CuratorFramework client;
+    private static ExponentialBackoffRetry retryPolicy =
+            new ExponentialBackoffRetry(1000, 3);
+
+    public enum ZOOKEEP_RETRY_POLICY{
+      ZOOKEEP_RETRY_POLICY_SIMPLE,
+              ZOOKEEP_RETRY_POLICY_WITH_OPTION
+    }
+
+    public static CuratorFramework getClient() {
+        return client;
+    }
+
+    public static void start(String connectionString, ZOOKEEP_RETRY_POLICY zookeeperRetryPolicy) {
+        switch (zookeeperRetryPolicy) {
+            case ZOOKEEP_RETRY_POLICY_SIMPLE:
+                client = createSimple(connectionString);
+                break;
+            case ZOOKEEP_RETRY_POLICY_WITH_OPTION:
+                client = createWithOptions(connectionString, retryPolicy, 2000, 200);
+                break;
+            default:
+                System.out.println("UnSupported");
+        }
+    }
 
     public static CuratorFramework createSimple(String connectionString) {
         // 重试策略:第一次重试等待1s， 第二次重试等待2s， 第三次重试等待4s
         // 第一个参数： 等待时间的基础单位， 单位为毫秒
         // 第二个参数： 最大重试次数
-        ExponentialBackoffRetry retryPolicy =
-                new ExponentialBackoffRetry(1000, 3);
+
 
         // 获取CuratorFramework实例的最简单方式
         // 第一个参数： zk的连接地址
