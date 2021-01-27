@@ -4,7 +4,6 @@ import java.io.DataInput;
 import java.io.DataOutput;
 import java.io.IOException;
 import java.net.URI;
-import java.net.URISyntaxException;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FileSystem;
@@ -42,7 +41,7 @@ public class RectangleSortDemo {
 
 		Job job = Job.getInstance(conf, "Rectangle Sort");
 		//运行jar类
-		job.setJarByClass(RectangleSortDemo.class);
+		job.setJarByClass(DedupDemo.class);
 
 		job.setInputFormatClass(TextInputFormat.class);
 		//设置map
