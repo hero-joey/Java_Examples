@@ -22,9 +22,9 @@ public class HadoopApp
     }
 
     public static void createDirectory() throws Exception {
-       FileSystem fileSystem = getFileSystem();
+       FileSystem hdfs = getFileSystem();
        Path directoryPath = new Path("/dir/create");
-       fileSystem.mkdirs(directoryPath);
+        hdfs.mkdirs(directoryPath);
     }
 
     public static void createFile() throws Exception {

@@ -74,6 +74,8 @@ public class WordCountDemo {
             int sum = 0;
             for (IntWritable intWritable : values) {
                 sum += intWritable.get();
+                System.out.println("Key: " + key);
+                System.out.println("sum value inc: " + sum);
             }
             wordCount.set(sum);
             context.write(key, wordCount);
