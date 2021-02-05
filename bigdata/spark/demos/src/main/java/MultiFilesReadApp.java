@@ -36,7 +36,7 @@ public class MultiFilesReadApp {
         javaRDD.take(100).forEach(System.out::println);
 
         //计算中间结果，可以保存在内存中，使用cache方法或者persist方法
-        JavaRDD<Integer> lineLengths = javaRDD.map(s -> s.length()).cache();
+        JavaRDD<Integer> lineLengths = javaRDD.map(String::length).cache();
         lineLengths.persist(StorageLevel.MEMORY_ONLY());
 
         int totalLength = lineLengths.reduce((a, b) -> a + b);
