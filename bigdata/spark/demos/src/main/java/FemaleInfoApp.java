@@ -1,5 +1,3 @@
-package main.java;
-
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.function.Function;
 import org.apache.spark.sql.Dataset;
@@ -15,7 +13,7 @@ import java.util.List;
  * @author: maccura
  * @version: 1.0
  */
-public class FemaleInfoCollection {
+public class FemaleInfoApp {
 
     public static class FemaleInfo implements Serializable {
         private String name;
@@ -53,7 +51,7 @@ public class FemaleInfoCollection {
     public static void main(String[] args) {
         SparkSession spark = SparkSession
                 .builder()
-                .appName("CollectFemaleInfo").master("local")
+                .appName("CollectFemaleInfo")
                 .getOrCreate();
 
         JavaRDD<FemaleInfo> femaleInfoJavaRDD = spark.read().textFile("file:///home/hero/data/femaleinfo")
