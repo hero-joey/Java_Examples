@@ -15,6 +15,10 @@ import java.util.Random;
 public class RandomIdGenerator implements IdGenerator {
 
     private String generateRandomAlphameric(int length) {
+        if (length <= 0) {
+            throw new IllegalArgumentException("hostname不能为空");
+        }
+
         char[] randomChars = new char[length];
         int count = 0;
         Random random = new Random();
@@ -37,6 +41,10 @@ public class RandomIdGenerator implements IdGenerator {
     }
 
     private String getLastSubstrSplitByDot(String hostName) {
+        if (hostName == null || hostName.isEmpty()) {
+            throw new IllegalArgumentException("hostname不能为空");
+        }
+
         String[] tokens = hostName.split("\\.");
         return tokens[tokens.length - 1];
     }
@@ -44,6 +52,10 @@ public class RandomIdGenerator implements IdGenerator {
     private String getLastFiledOfHostName() throws UnknownHostException {
         String substrOfHostName = null;
         String hostName = InetAddress.getLocalHost().getHostName();
+        if (hostName == null || hostName.isEmpty()) {
+            throw new UnknownHostException("hostname不能为空");
+        }
+
         substrOfHostName = getLastSubstrSplitByDot(hostName);
         return substrOfHostName;
     }
