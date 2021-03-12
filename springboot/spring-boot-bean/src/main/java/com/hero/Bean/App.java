@@ -10,7 +10,7 @@ public class App {
 		System.out.println(configApplicationContext.getBean(MyBean.class));
 		System.out.println(configApplicationContext.getBean("myBean"));
 		
-		//System.out.println(configApplicationContext.getBean(Jeep.class));
+		System.out.println(configApplicationContext.getBean(Jeep.class));
 		System.out.println(configApplicationContext.getBean("createRunableFactoryBean"));
 		System.out.println(configApplicationContext.getBean(RunableFactoryBean.class));
 		System.out.println(configApplicationContext.getBean("&createRunableFactoryBean"));
