@@ -1,4 +1,4 @@
-package com.hero.designpatten.strategy.evictionv1;
+package com.hero.designpatten.strategy.eviction;
 
 /**
  * @description: ConcreteStrategyA
@@ -6,9 +6,9 @@ package com.hero.designpatten.strategy.evictionv1;
  * @author: maccura
  * @version: 1.0
  */
-public class ConcreteEvictionStrategyA implements EvictionStrategy {
+public class ConcreteEvictionStrategyB implements EvictionStrategy {
     @Override
     public void evict() {
-
+        
     }
 }

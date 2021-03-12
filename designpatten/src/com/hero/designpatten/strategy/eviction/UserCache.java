@@ -1,4 +1,4 @@
-package com.hero.designpatten.strategy.evictionv1;
+package com.hero.designpatten.strategy.eviction;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -1,4 +1,4 @@
-package com.hero.designpatten.strategy.evictionv1;
+package com.hero.designpatten.strategy.eviction;
 
 /**
  * @description: User
